@@ -1,0 +1,56 @@
+{{extend 'layout.html'}}
+{{if auth.user.id==3:}}
+{{=A('Click to see Admin Page',_href=URL(r=request,f='admin_page'))}}<br/>
+{{pass}}
+<h1>NEWS</h1>
+{{MyUrl = "http://127.0.0.1:8000%s/%s" %(str(request.url),str(request.env.query_string))}} 
+ 
+<!--{{for item in news:}}
+<ul>
+<li>{{=A(item.title,_href=item.link)}}<br/>
+submitted by {{=db.auth_user[item.posted_by].first_name}} on {{=item.posted_on}}<br/>
+{{=A('Comments',_href=URL(r=request,f='view_news',args=item.id))}}<br/>
+{{pass}}
+</ul>-->
+
+{{for cat in cats:}}
+<center><h3>{{=cat.name}}</h3></center><br/>
+	{{for item in news:}}
+		{{if item.category_id==cat.id:}}
+<h2>{{=A(item.title,_href=item.link)}}</h2><br/>
+<h4>{{=item.rating}}</h4>{{=A(' UPVOTE',_href=URL(r=request,f='upvote',args=item.id))}}{{=A(' DOWNVOTE',_href=URL(r=request,f='downvote',args=item.id))}}<br/>
+submitted by {{=db.auth_user[item.posted_by].first_name}} on {{=item.posted_on}}<br/>
+{{=A('Comments',_href=URL(r=request,f='view_news',args=item.id))}}<br/>
+{{flag=0}}
+{{if auth.user.id == 3:}}
+{{flag=1}}{{pass}}
+{{if item.posted_by==auth.user.id:}}
+{{=A('Update post',_href=URL(r=request,f='update_news',args=item.id))}}<br/>
+{{=A('Delete post',_href=URL(r=request,f='delete_news',args=item.id))}}{{pass}}
+{{if auth.user.id==3 && flag==0:}}
+{{=A('Delete post',_href=URL(r=request,f='delete_news',args=item.id))}}{{pass}}
+<br/>
+
+<!--<br />
+Votes=<span id="news{{=item.id}}">{{=item.uvotes}}</span>
+[<span onclick="jQuery('#id').val('{{=item.id}}');
+       ajax('upvote', ['id'], 'news{{=item.id}}');">vote up</span>]
+<br />
+Votes=<span id="item{{=item.id}}">{{=item.dvotes}}</span>
+[<span onclick="jQuery('#id').val('{{=item.id}}');
+       ajax('downvote', ['id'], 'item{{=item.id}}');">vote down</span>]
+<br/>
+UpVotes={{=item.uvotes}}
+{{=A(' UPVOTE',_href=URL(r=request,f='upvote',args=item.id))}}<br/>
+{{if item.posted_by==auth.user.id:}}
+{{=A('Update post',_href=URL(r=request,f='update_news',args=item.id))}}<br/>{{pass}}
+<br/>
+DownVotes={{=item.dvotes}}
+{{=A(' DOWNVOTE',_href=URL(r=request,f='downvote',args=item.id))}}<br/>
+Rating={{=item.rating}}<br/>-->
+		{{pass}}
+	{{pass}}
+{{pass}}
+			
+
+{{=A('post news',_href=URL(r=request,f='post_news'))}}

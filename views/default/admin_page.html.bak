@@ -1,0 +1,4 @@
+{{extend 'layout.html'}}
+{{=A('Click to see Users list',_href=URL(r=request,f='users_list'))}}<br/>
+{{=A('Click to see News items',_href=URL(r=request,f='list_news'))}}<br/>
+{{=A('Click to see Add Categories',_href=URL(r=request,f='add_cats'))}}<br/>

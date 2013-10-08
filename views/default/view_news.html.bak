@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+<h1> {{=form1.record.title}} </h1>
+{{item=db.news[news_id]}}
+
+submitted by {{=db.auth_user[item.posted_by].first_name}} on {{=item.posted_on}}<br/>
+<h2> Add Comment</h2>
+{{=form2}}
+<h2>Comments</h2>
+{{for comment in comments:}}{{=db.auth_user[comment.posted_by].first_name}} said "{{=comment.body}}" on {{=comment.posted_on}} </br>
+{{pass}}

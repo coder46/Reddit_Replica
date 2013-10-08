@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+{{for i in users:}}
+{{if i.id!=3:}}
+{{=i.first_name}} {{=i.last_name}} {{=i.email}} {{=A('Delete User',_href=URL(r=request,f='delete_user',args=i.id))}}<br/>
+{{pass}}
+{{pass}}

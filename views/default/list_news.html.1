@@ -1,0 +1,42 @@
+{{extend 'layout.html'}}
+<h1>NEWS</h1>
+ 
+<!--{{for item in news:}}
+<ul>
+<li>{{=A(item.title,_href=item.link)}}<br/>
+submitted by {{=db.auth_user[item.posted_by].first_name}} on {{=item.posted_on}}<br/>
+{{=A('Comments',_href=URL(r=request,f='view_news',args=item.id))}}<br/>
+{{pass}}
+</ul>-->
+
+{{for cat in cats:}}
+	{{=cat.name}}<br/>
+	{{for item in news:}}
+		{{if item.category_id==cat.id:}}
+			{{=A(item.title,_href=item.link)}}<br/>
+submitted by {{=db.auth_user[item.posted_by].first_name}} on {{=item.posted_on}}<br/>
+{{=A('Comments',_href=URL(r=request,f='view_news',args=item.id))}}<br/>
+<!--<br />
+Votes=<span id="news{{=item.id}}">{{=item.uvotes}}</span>
+[<span onclick="jQuery('#id').val('{{=item.id}}');
+       ajax('upvote', ['id'], 'news{{=item.id}}');">vote up</span>]
+<br />
+Votes=<span id="item{{=item.id}}">{{=item.dvotes}}</span>
+[<span onclick="jQuery('#id').val('{{=item.id}}');
+       ajax('downvote', ['id'], 'item{{=item.id}}');">vote down</span>]
+<br/>-->
+UpVotes={{=item.uvotes}}
+{{=A(' UPVOTE',_href=URL(r=request,f='upvote',args=item.id))}}<br/>
+{{if item.posted_by==auth.user.id:}}
+{{=A('Update post',_href=URL(r=request,f='update_news',args=item.id))}}<br/>{{pass}}
+<br/>
+DownVotes={{=item.dvotes}}
+{{=A(' DOWNVOTsE',_href=URL(r=request,f='downvote',args=item.id))}}<br/>
+Rating={{=item.rating}}<br/>
+		{{pass}}
+	{{pass}}
+	<br/>
+{{pass}}
+			
+
+{{=A('post news',_href=URL(r=request,f='post_news'))}}
